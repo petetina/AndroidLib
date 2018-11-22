@@ -3,96 +3,36 @@ package antoinepetetin.fr.pocandroidlibrary
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import android.view.View
-import android.widget.Button
-import antoinepetetin.fr.easylogin.*
+import antoinepetetin.fr.easylogin.EasyLoginCallbacks
+import antoinepetetin.fr.easylogin.EasyLoginException
+import antoinepetetin.fr.easylogin.EasyLoginImpl
 import antoinepetetin.fr.easylogin.user.EasyUser
 import kotlinx.android.synthetic.main.activity_main.*
 
+class MainActivity : AppCompatActivity(), EasyLoginCallbacks{
 
-/* Without library
-class MainActivity : AppCompatActivity() {
-    val mockData: List<out FakeDataModel> = listOf(
-        FakeDataModel("azerty"),
-        FakeDataModel("plop"),
-        FakeDataModel("hello")
-    )
+    var easyLogin: EasyLoginImpl? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var recyclerView = findViewById(R.id.recycler_view) as RecyclerView
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = CustomAdapter(mockData, R.layout.layout_item)
-    }
-}
-*/
-
-/* test custom adapter
-// With our custom library
-class MainActivity : AppCompatActivity() {
-
-    val mockData: List<out FakeDataModel> = listOf(
-        FakeDataModel("azerty"),
-        FakeDataModel("plop"),
-        FakeDataModel("hello")
-    )
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        var recyclerView = findViewById(R.id.recycler_view) as RecyclerView
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = RecyclerViewAdapter(mockData, R.layout.layout_item)
-    }
-}
-        */
-
-class MainActivity : AppCompatActivity(), EasyLoginCallbacks, View.OnClickListener{
-
-    var config: EasyLoginConfig? = null
-    var easyLogin: EasyLogin? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        //Init config
-        config = EasyLoginConfig(this /* Context */, this /* SmartLoginCallbacks */)
-
-        //handlers
-        signInButton.setOnClickListener(this)
-
+        //Init our library with activity and callback
+        easyLogin = EasyLoginImpl(this,this)
     }
 
-    override fun onClick(v: View?) {
-        when(v?.id){
-            signInButton.id -> {
-                easyLogin = EasyLoginImpl.buildCustomLogin()
-                easyLogin?.let {
-                    it.login(config!!)
-                }
-            }
-            R.id.facebook_login_button -> {
-                // TODO
-            }
-            R.id.google_login_button -> {
-                // TODO
-            }
-        }
-    }
-
-
+    //Cette méthode est déclenchée en cas de succès du login
     override fun onLoginSuccess(user: EasyUser) {
         Log.e("onLoginSuccess",user.toString())
     }
 
+    //Cette méthode est déclenchée en cas de succès d'échec d'authentification
     override fun onLoginFailure(e: EasyLoginException) {
         Log.e("onLoginFailure",e.message)
     }
 
+    //Cette méthode sert à décrire de quoi est composé notre EasyUser
+    //A notre charge de créer un easyuser en fonction de nos champs
     override fun doCustomLogin(): EasyUser? {
 
         Log.e("doCustomLogin","Running")
@@ -100,13 +40,9 @@ class MainActivity : AppCompatActivity(), EasyLoginCallbacks, View.OnClickListen
         //And then create an EasyUser with info
         var user = EasyUser()
         user.userId = "1" //you can get id from the user in DB
-        user.email = email.text.toString()
+        user.email = emailPasswordView.email!!.text.toString() //Get the text from our custom layout :) amazing !!!
 
-        //Check user
-        if(EasyUserVerification.checkEmail(user.email))
-            return user
-        else
-            return null
+        return user
     }
 
     override fun doCustomSignup(): EasyUser {

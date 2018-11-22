@@ -1,28 +1,37 @@
 package antoinepetetin.fr.easylogin
 
+import android.app.Activity
 import antoinepetetin.fr.easylogin.loginProcess.CustomLogin
 import antoinepetetin.fr.easylogin.loginProcess.FacebookLogin
 import antoinepetetin.fr.easylogin.loginProcess.GoogleLogin
 import antoinepetetin.fr.easylogin.user.EasyUserProperty
 
-abstract class EasyLoginImpl {
-    companion object {
-        fun build(loginType: LoginType): EasyLogin {
-            when (loginType) {
-                LoginType.Facebook -> return FacebookLogin()
-                LoginType.Google -> return GoogleLogin()
-                else ->
-                    // To avoid null pointers
-                    return CustomLogin()
-            }
-        }
+class EasyLoginImpl {
 
-        fun buildCustomLogin(requiredFields: Array<EasyUserProperty>?): EasyLogin{
-            return CustomLogin(requiredFields)
-        }
+    var config: EasyLoginConfig? = null
 
-        fun buildCustomLogin(): EasyLogin{
-            return CustomLogin()
+    constructor(activity: Activity, callback: EasyLoginCallbacks){
+        config = EasyLoginConfig(activity, callback)
+    }
+
+
+    fun build(loginType: LoginType): EasyLogin {
+
+        when (loginType) {
+            LoginType.Facebook -> return FacebookLogin(config!!)
+            LoginType.Google -> return GoogleLogin(config!!)
+            else ->
+                // To avoid null pointers
+                return CustomLogin(config!!)
         }
     }
+
+    fun buildCustomLogin(requiredFields: Array<EasyUserProperty>?): EasyLogin{
+        return CustomLogin(config!!, requiredFields)
+    }
+
+    fun buildCustomLogin(): EasyLogin{
+        return CustomLogin(config!!)
+    }
+
 }

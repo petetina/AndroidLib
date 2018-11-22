@@ -9,9 +9,10 @@ import android.content.Intent
  * A login screen that offers login via email/password.
  */
 abstract class EasyLogin{
-    abstract fun login(config: EasyLoginConfig)
 
-    abstract fun signup(config: EasyLoginConfig)
+    abstract fun login()
+
+    abstract fun signup()
 
     abstract fun logout(context: Context): Boolean
 

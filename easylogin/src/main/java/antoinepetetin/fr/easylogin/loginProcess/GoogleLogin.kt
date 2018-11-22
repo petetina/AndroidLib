@@ -13,8 +13,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.GoogleApiClient
 
 
-class GoogleLogin : EasyLogin() {
-    override fun login(config: EasyLoginConfig) {
+class GoogleLogin(var config: EasyLoginConfig) : EasyLogin() {
+
+    override fun login() {
         var apiClient = config.getGoogleApiClient()
         val activity = config.getActivity()
 
@@ -35,7 +36,7 @@ class GoogleLogin : EasyLogin() {
         progress.dismiss()
     }
 
-    override fun signup(config: EasyLoginConfig) {
+    override fun signup() {
 
     }
 

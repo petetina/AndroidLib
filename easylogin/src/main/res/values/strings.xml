@@ -17,4 +17,9 @@
 
     <string name="sign_in_facebook">Sign in with Facebook</string>
     <string name="sign_in_google">Sign in with Google</string>
+    <string name="sign_up_button">Sign up</string>
+    <string name="logout_text">Sign out</string>
+    <string name="user_exists">User already logged in</string>
+    <string name="sign_in_button">Sign in</string>
+    <string name="sign_up">No account yet? Create one</string>
 </resources>

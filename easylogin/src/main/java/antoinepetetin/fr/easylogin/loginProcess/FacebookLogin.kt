@@ -15,7 +15,7 @@ import org.json.JSONException
 import org.json.JSONObject
 
 
-class FacebookLogin: EasyLogin() {
+class FacebookLogin(var config: EasyLoginConfig): EasyLogin() {
 
     private val callbackManager:CallbackManager
     init{
@@ -23,7 +23,7 @@ class FacebookLogin: EasyLogin() {
         callbackManager = CallbackManager.Factory.create()
     }
 
-    override fun login(config: EasyLoginConfig) {
+    override fun login() {
         val activity = config.getActivity()
         val callback = config.getCallback()
         val progress = ProgressDialog.show(activity, "", activity.getString(R.string.logging_holder), true)
@@ -60,7 +60,7 @@ class FacebookLogin: EasyLogin() {
         })
     }
 
-    override fun signup(config:EasyLoginConfig) {
+    override fun signup() {
 
     }
 

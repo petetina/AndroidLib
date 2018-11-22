@@ -1,1 +1,1 @@
-include ':app', ':customrecyclerview', ':easylogin'
+include ':app', ':easylogin'
