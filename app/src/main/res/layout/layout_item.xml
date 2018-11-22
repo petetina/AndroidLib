@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable name="item" type="antoinepetetin.fr.pocandroidlibrary.FakeDataModel"/>
+    </data>
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text='@{item.id + ""}'
+                android:gravity="center"
+                tools:text="139"/>
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{item.textToDisplay}"
+                android:gravity="center"
+                tools:text="plop"/>
+    </LinearLayout>
+</layout>
