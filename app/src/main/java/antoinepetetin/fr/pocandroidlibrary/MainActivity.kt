@@ -8,6 +8,9 @@ import antoinepetetin.fr.easylogin.EasyLoginException
 import antoinepetetin.fr.easylogin.EasyLoginImpl
 import antoinepetetin.fr.easylogin.user.EasyUser
 import kotlinx.android.synthetic.main.activity_main.*
+import android.content.Intent
+import android.content.pm.PackageManager
+
 
 class MainActivity : AppCompatActivity(), EasyLoginCallbacks{
 
@@ -19,6 +22,8 @@ class MainActivity : AppCompatActivity(), EasyLoginCallbacks{
 
         //Init our library with activity and callback
         easyLogin = EasyLoginImpl(this,this)
+
+
     }
 
     //Cette méthode est déclenchée en cas de succès du login
@@ -47,5 +52,10 @@ class MainActivity : AppCompatActivity(), EasyLoginCallbacks{
 
     override fun doCustomSignup(): EasyUser {
         TODO("not implemented")
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        easyLogin!!.onFacebookResult(requestCode, resultCode, data)
     }
 }

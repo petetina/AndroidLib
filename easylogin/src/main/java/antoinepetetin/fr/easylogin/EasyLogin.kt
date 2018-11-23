@@ -16,5 +16,5 @@ abstract class EasyLogin{
 
     abstract fun logout(context: Context): Boolean
 
-    abstract fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent, config: EasyLoginConfig)
+    abstract fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
 }

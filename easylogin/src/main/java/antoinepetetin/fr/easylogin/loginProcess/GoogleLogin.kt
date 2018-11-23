@@ -55,7 +55,7 @@ class GoogleLogin(var config: EasyLoginConfig) : EasyLogin() {
 
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent, config: EasyLoginConfig) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         val progress =
             ProgressDialog.show(config.getActivity(), "", config.getActivity().getString(R.string.getting_data), true)
         val result = Auth.GoogleSignInApi.getSignInResultFromIntent(data)

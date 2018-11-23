@@ -37,5 +37,9 @@ dependencies {
     // notice that the compiler version must be the same than our gradle version
     kapt "androidx.databinding:databinding-compiler:$gradle_version"
     // implementation project(':customrecyclerview')
+
+    // Google Play Services
+    implementation 'com.google.gms:google-services:3.0.0'
+
     implementation project(':easylogin')
 }

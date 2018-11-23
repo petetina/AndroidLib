@@ -96,7 +96,7 @@ class CustomLogin(var config: EasyLoginConfig, var requiredFields: Array<EasyUse
 
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent, config: EasyLoginConfig) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
     }
 }
