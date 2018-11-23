@@ -25,9 +25,8 @@ allprojects {
 
         mavenLocal()
         mavenCentral()
-        google()        //---> Add this
+        google()
         jcenter()
-        // google()
     }
 }
 

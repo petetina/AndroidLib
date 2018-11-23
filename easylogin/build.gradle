@@ -53,6 +53,9 @@ dependencies {
     // Google Play Services
     implementation 'com.google.android.gms:play-services-auth:16.0.1'
 
+    // Google Services
+    implementation 'com.google.gms:google-services:3.0.0'
+
     // GSON
     implementation 'com.google.code.gson:gson:2.8.5'
 }
