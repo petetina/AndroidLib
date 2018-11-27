@@ -5,12 +5,12 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
 import android.widget.LinearLayout
-import antoinepetetin.fr.easylogin.EasyLoginCallbacks
 import antoinepetetin.fr.easylogin.EasyLogin
+import antoinepetetin.fr.easylogin.EasyLoginCallbacks
 import antoinepetetin.fr.easylogin.LoginType
 import antoinepetetin.fr.easylogin.R
+import com.google.android.gms.common.SignInButton
 
 class GoogleSignInButton @JvmOverloads constructor(
     context: Context,
@@ -24,7 +24,7 @@ class GoogleSignInButton @JvmOverloads constructor(
         view = LayoutInflater.from(context)
             .inflate(R.layout.google_signin_button, this, true)
 
-        view!!.findViewById<Button>(R.id.google_login_button).setOnClickListener(object : View.OnClickListener {
+        view!!.findViewById<SignInButton>(R.id.google_login_button).setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 //Call login automatically
                 EasyLogin(context as Activity,context as EasyLoginCallbacks).build(LoginType.Google).login()
@@ -36,6 +36,6 @@ class GoogleSignInButton @JvmOverloads constructor(
 
     override fun setOnClickListener(l: OnClickListener?) {
         super.setOnClickListener(l)
-        view!!.findViewById<Button>(R.id.google_login_button).callOnClick()
+        view!!.findViewById<SignInButton>(R.id.google_login_button).callOnClick()
     }
 }
