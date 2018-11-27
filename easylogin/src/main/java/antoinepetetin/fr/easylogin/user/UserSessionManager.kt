@@ -7,7 +7,7 @@ import antoinepetetin.fr.easylogin.Constants
 import com.google.gson.Gson
 
 
-object UserSessionManager {
+internal object UserSessionManager {
 
     /**
      * This static method can be called to get the logged in user.

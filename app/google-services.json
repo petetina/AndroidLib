@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "603935733890",
+    "firebase_url": "https://pocandroidlibrary.firebaseio.com",
+    "project_id": "pocandroidlibrary",
+    "storage_bucket": "pocandroidlibrary.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:603935733890:android:67e702cbe427da08",
+        "android_client_info": {
+          "package_name": "antoinepetetin.fr.pocandroidlibrary"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "603935733890-cp7edpl8v6grc26o95sp79835jldlsm4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "antoinepetetin.fr.pocandroidlibrary",
+            "certificate_hash": "ad5e52833d1542b3efef666acd8d70b2326c38a0"
+          }
+        },
+        {
+          "client_id": "603935733890-fnp5rgtu0nl8me2bpa0grcfms6lq3uc2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_sjaHJZsWnyPLzRmCYCMLNN3tAMq3ieY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "603935733890-fnp5rgtu0nl8me2bpa0grcfms6lq3uc2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

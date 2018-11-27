@@ -11,7 +11,12 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <meta-data android:name="facebook_app_id" android:value="string/727917454246820" />
+        <meta-data
+                android:name="facebook_app_id"
+                android:value="string/727917454246820"/>
+        <meta-data
+                android:name="google_token_id"
+                android:value="603935733890-so7ep5dtck60hrqgsj319m8rvj0b5o38.apps.googleusercontent.com"/>
 
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -20,7 +25,8 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
+        <activity android:name=".UserConnectedActivity">
+        </activity>
     </application>
 
 </manifest>

@@ -37,5 +37,10 @@ dependencies {
     // notice that the compiler version must be the same than our gradle version
     kapt "androidx.databinding:databinding-compiler:$gradle_version"
 
+    //Firebase
+    implementation 'com.google.firebase:firebase-auth:16.0.5'
+
     implementation project(':easylogin')
 }
+
+apply plugin: 'com.google.gms.google-services'

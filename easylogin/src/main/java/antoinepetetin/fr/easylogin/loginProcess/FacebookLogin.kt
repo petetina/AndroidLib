@@ -1,33 +1,23 @@
 package antoinepetetin.fr.easylogin.loginProcess
 
-import android.app.Activity
-import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Bundle
 import android.util.Log
 import antoinepetetin.fr.easylogin.*
-import antoinepetetin.fr.easylogin.R
 import antoinepetetin.fr.easylogin.user.EasyFacebookUser
 import antoinepetetin.fr.easylogin.user.UserSessionManager
 import com.facebook.*
+import com.facebook.AccessToken
 import com.facebook.appevents.AppEventsLogger
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import org.json.JSONException
 import org.json.JSONObject
-import android.os.Bundle
-import com.facebook.GraphResponse
-import com.facebook.GraphRequest
-import com.facebook.AccessToken
-import android.content.pm.ApplicationInfo
 
 
-
-
-
-
-class FacebookLogin(var config: EasyLoginConfig): EasyLogin() {
+internal class FacebookLogin(var config: EasyLoginConfig): EasyLogin() {
 
     private val callbackManager:CallbackManager
     init{

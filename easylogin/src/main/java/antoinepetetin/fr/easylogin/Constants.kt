@@ -1,6 +1,6 @@
 package antoinepetetin.fr.easylogin
 
-abstract class Constants {
+internal abstract class Constants {
 
     companion object {
 
@@ -23,7 +23,6 @@ abstract class Constants {
 
         val USER_TYPE = "user_type"
 
-        val FACEBOOK_LOGIN_REQUEST = 321
         val GOOGLE_LOGIN_REQUEST = 322
         val CUSTOM_LOGIN_REQUEST = 323
         val CUSTOM_SIGNUP_REQUEST = 324

@@ -1,16 +1,13 @@
 package antoinepetetin.fr.easylogin
 
 import android.app.Activity
-import com.google.android.gms.common.api.GoogleApiClient
-import android.os.Bundle
 import android.content.pm.PackageManager
-import android.content.pm.ApplicationInfo
+import com.google.android.gms.common.api.GoogleApiClient
 
 
-
-
-class EasyLoginConfig {
+internal class EasyLoginConfig {
     private var facebookAppId: String? = null
+    private var googleTokenId: String? = null
     private var facebookPermissions: ArrayList<String>? = null
     private var googleApiClient: GoogleApiClient? = null
     private val activity: Activity

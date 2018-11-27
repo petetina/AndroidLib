@@ -1,39 +1,53 @@
 package antoinepetetin.fr.easylogin.loginProcess
 
-import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.util.Log
 import antoinepetetin.fr.easylogin.*
 import antoinepetetin.fr.easylogin.user.EasyGoogleUser
 import antoinepetetin.fr.easylogin.user.UserSessionManager
 import com.google.android.gms.auth.api.Auth
+import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.auth.api.signin.GoogleSignInStatusCodes
+import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.GoogleApiClient
 
 
-class GoogleLogin(var config: EasyLoginConfig) : EasyLogin() {
+internal class GoogleLogin(var config: EasyLoginConfig) : EasyLogin() {
 
     override fun login() {
+
         var apiClient = config.getGoogleApiClient()
         val activity = config.getActivity()
 
         if (apiClient == null) {
-            val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+
+            //try to read google_token_id from developer's manifest project
+            var googleTokenId = activity
+                .packageManager
+                .getApplicationInfo(activity.packageName, PackageManager.GET_META_DATA)
+                .metaData.getString("google_token_id")
+
+            //Create google sigin options builder
+            var gsoBuilder = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .requestProfile()
-                .build()
 
+            //if token id is not null, pass it to the builder
+            if(googleTokenId !== null)
+                gsoBuilder.requestIdToken(googleTokenId)
+
+            //finally, create the apiClient from builder
             apiClient = GoogleApiClient.Builder(activity)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gsoBuilder.build())
                 .build()
         }
 
-        val progress = ProgressDialog.show(activity, "", activity.getString(R.string.logging_holder), true)
         val signInIntent = Auth.GoogleSignInApi.getSignInIntent(apiClient)
         activity.startActivityForResult(signInIntent, Constants.GOOGLE_LOGIN_REQUEST)
-        progress.dismiss()
     }
 
     override fun signup() {
@@ -56,24 +70,31 @@ class GoogleLogin(var config: EasyLoginConfig) : EasyLogin() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        val progress =
-            ProgressDialog.show(config.getActivity(), "", config.getActivity().getString(R.string.getting_data), true)
-        val result = Auth.GoogleSignInApi.getSignInResultFromIntent(data)
-        Log.d("GOOGLE SIGN IN", "handleSignInResult:" + result.isSuccess)
-        if (result.isSuccess) {
+        // The Task returned from this call is always completed, no need to attach
+        // a listener.
+        val completedTask = GoogleSignIn.getSignedInAccountFromIntent(data)
+        try {
+            val account = completedTask.getResult(ApiException::class.java)
+
             // Signed in successfully, show authenticated UI.
-            val acct = result.signInAccount
-            val googleUser = populateGoogleUser(acct!!)
+            val googleUser = populateGoogleUser(account!!)
+
             // Save the user
             UserSessionManager.setUserSession(config.getActivity(), googleUser)
             config.getCallback().onLoginSuccess(googleUser)
-            progress.dismiss()
-        } else {
-            Log.d("GOOGLE SIGN IN", "" + requestCode)
-            // Signed out, show unauthenticated UI.
-            progress.dismiss()
-            config.getCallback().onLoginFailure(EasyLoginException("Google login failed", LoginType.Google))
+
+        } catch (e: ApiException) {
+            // The ApiException status code indicates the detailed failure reason.
+            // Please refer to the GoogleSignInStatusCodes class reference for more information.
+            Log.e("Google onActivityResult", "signInResult:failed code=" + e.statusCode + " " + e.message)
+            Log.e("GOOGLE SIGN IN", "" + requestCode)
+
+            if(e.statusCode !== GoogleSignInStatusCodes.SIGN_IN_CANCELLED) {
+                // Signed out, show unauthenticated UI.
+                config.getCallback().onLoginFailure(EasyLoginException("Google login failed", LoginType.Google))
+            }
         }
+
     }
 
     private fun populateGoogleUser(account: GoogleSignInAccount): EasyGoogleUser {
@@ -81,6 +102,8 @@ class GoogleLogin(var config: EasyLoginConfig) : EasyLogin() {
         val googleUser = EasyGoogleUser()
         //populate the user
         googleUser.displayName = account.displayName
+        googleUser.firstName = account.givenName
+        googleUser.lastName = account.familyName
         if (account.photoUrl != null) {
             googleUser.photoUrl = account.photoUrl!!.toString()
         }

@@ -13,7 +13,7 @@ import antoinepetetin.fr.easylogin.user.EasyUser
 import antoinepetetin.fr.easylogin.user.EasyUserProperty
 import antoinepetetin.fr.easylogin.user.UserSessionManager
 
-class CustomLogin(var config: EasyLoginConfig, var requiredFields: Array<EasyUserProperty>? = null) : EasyLogin() {
+internal class CustomLogin(var config: EasyLoginConfig, var requiredFields: Array<EasyUserProperty>? = null) : EasyLogin() {
 
     override fun login() {
         val user = config.getCallback().doCustomLogin()

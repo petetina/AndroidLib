@@ -1,7 +1,8 @@
 package antoinepetetin.fr.easylogin.user
 
+import java.io.Serializable
 
-open class EasyUser {
+open class EasyUser: Serializable{
 
     var userId: String? = null
         set(value) {field = formatString(value)}

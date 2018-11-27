@@ -1,43 +1,35 @@
 package antoinepetetin.fr.pocandroidlibrary
 
+import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import antoinepetetin.fr.easylogin.EasyLoginCallbacks
+import android.widget.Toast
+import antoinepetetin.fr.easylogin.EasyLoginActivity
 import antoinepetetin.fr.easylogin.EasyLoginException
-import antoinepetetin.fr.easylogin.EasyLoginImpl
 import antoinepetetin.fr.easylogin.user.EasyUser
 import kotlinx.android.synthetic.main.activity_main.*
-import android.content.Intent
-import android.content.pm.PackageManager
 
 
-class MainActivity : AppCompatActivity(), EasyLoginCallbacks{
+class MainActivity : EasyLoginActivity()   {
 
-    var easyLogin: EasyLoginImpl? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //Init our library with activity and callback
-        easyLogin = EasyLoginImpl(this,this)
-
-
     }
 
-    //Cette méthode est déclenchée en cas de succès du login
     override fun onLoginSuccess(user: EasyUser) {
-        Log.e("onLoginSuccess",user.toString())
+        super.onLoginSuccess(user)
+        Log.e("user",user.toString())
+        Toast.makeText(this,"Well done :) You are connected !", Toast.LENGTH_LONG).show()
+
+        var intent = Intent(this,UserConnectedActivity::class.java)
+        intent.putExtra("user", user)
+        startActivity(intent)
+
     }
 
-    //Cette méthode est déclenchée en cas de succès d'échec d'authentification
-    override fun onLoginFailure(e: EasyLoginException) {
-        Log.e("onLoginFailure",e.message)
-    }
-
-    //Cette méthode sert à décrire de quoi est composé notre EasyUser
-    //A notre charge de créer un easyuser en fonction de nos champs
     override fun doCustomLogin(): EasyUser? {
 
         Log.e("doCustomLogin","Running")
@@ -48,14 +40,5 @@ class MainActivity : AppCompatActivity(), EasyLoginCallbacks{
         user.email = emailPasswordView.email!!.text.toString() //Get the text from our custom layout :) amazing !!!
 
         return user
-    }
-
-    override fun doCustomSignup(): EasyUser {
-        TODO("not implemented")
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        easyLogin!!.onFacebookResult(requestCode, resultCode, data)
     }
 }
