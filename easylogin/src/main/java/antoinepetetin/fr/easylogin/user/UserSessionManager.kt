@@ -9,6 +9,12 @@ import com.google.gson.Gson
 
 internal object UserSessionManager {
 
+    fun isUserConnected(context: Context): Boolean {
+        val preferences = context.getSharedPreferences(Constants.USER_PREFS, Context.MODE_PRIVATE)
+        val sessionUser = preferences.getString(Constants.USER_SESSION, Constants.DEFAULT_SESSION_VALUE)
+        return sessionUser != Constants.DEFAULT_SESSION_VALUE
+    }
+
     /**
      * This static method can be called to get the logged in user.
      * It reads from the shared preferences and builds a EasyUser object and returns it.

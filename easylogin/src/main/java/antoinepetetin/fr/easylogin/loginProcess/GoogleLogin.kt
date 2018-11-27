@@ -16,9 +16,11 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.GoogleApiClient
 
 
-internal class GoogleLogin(var config: EasyLoginConfig) : EasyLogin() {
+internal class GoogleLogin(config: EasyLoginConfig) : LoginProcess(config) {
 
     override fun login() {
+        //Really important because login can't be called if user is already connected
+        super.login()
 
         var apiClient = config.getGoogleApiClient()
         val activity = config.getActivity()

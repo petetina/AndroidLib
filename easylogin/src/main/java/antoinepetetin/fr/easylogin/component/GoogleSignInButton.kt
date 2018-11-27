@@ -8,7 +8,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
 import antoinepetetin.fr.easylogin.EasyLoginCallbacks
-import antoinepetetin.fr.easylogin.EasyLoginImpl
+import antoinepetetin.fr.easylogin.EasyLogin
 import antoinepetetin.fr.easylogin.LoginType
 import antoinepetetin.fr.easylogin.R
 
@@ -27,7 +27,7 @@ class GoogleSignInButton @JvmOverloads constructor(
         view!!.findViewById<Button>(R.id.google_login_button).setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 //Call login automatically
-                EasyLoginImpl(context as Activity,context as EasyLoginCallbacks).build(LoginType.Google).login()
+                EasyLogin(context as Activity,context as EasyLoginCallbacks).build(LoginType.Google).login()
             }
         })
 

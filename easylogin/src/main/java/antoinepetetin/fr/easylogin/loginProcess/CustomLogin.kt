@@ -4,18 +4,17 @@ import android.content.Context
 import android.content.Intent
 import android.support.design.widget.TextInputLayout
 import android.util.Log
-import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.Toast
 import antoinepetetin.fr.easylogin.*
-import antoinepetetin.fr.easylogin.component.EmailPasswordView
 import antoinepetetin.fr.easylogin.user.EasyUser
 import antoinepetetin.fr.easylogin.user.EasyUserProperty
 import antoinepetetin.fr.easylogin.user.UserSessionManager
 
-internal class CustomLogin(var config: EasyLoginConfig, var requiredFields: Array<EasyUserProperty>? = null) : EasyLogin() {
+internal class CustomLogin(config: EasyLoginConfig, var requiredFields: Array<EasyUserProperty>? = null) : LoginProcess(config) {
 
     override fun login() {
+        //Really important because login can't be called if user is already connected
+        super.login()
+
         val user = config.getCallback().doCustomLogin()
         if (user != null) {
 

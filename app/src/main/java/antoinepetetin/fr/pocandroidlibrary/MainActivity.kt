@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import antoinepetetin.fr.easylogin.EasyLoginActivity
-import antoinepetetin.fr.easylogin.EasyLoginException
 import antoinepetetin.fr.easylogin.user.EasyUser
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -25,7 +24,7 @@ class MainActivity : EasyLoginActivity()   {
         Toast.makeText(this,"Well done :) You are connected !", Toast.LENGTH_LONG).show()
 
         var intent = Intent(this,UserConnectedActivity::class.java)
-        intent.putExtra("user", user)
+        intent.putExtra("user",user)
         startActivity(intent)
 
     }

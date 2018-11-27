@@ -7,12 +7,12 @@ import antoinepetetin.fr.easylogin.user.EasyUser
 
 open class EasyLoginActivity: AppCompatActivity(), EasyLoginCallbacks{
 
-    var easyLogin: EasyLoginImpl? = null
+    private var easyLogin: EasyLogin? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //Init our library with activity and callback
-        easyLogin = EasyLoginImpl(this,this)
+        easyLogin = EasyLogin(this,this)
     }
 
     //Cette méthode est déclenchée en cas de succès du login
@@ -35,9 +35,9 @@ open class EasyLoginActivity: AppCompatActivity(), EasyLoginCallbacks{
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(EasyLoginImpl.isFacebookRequest(requestCode))
+        if(EasyLogin.isFacebookRequest(requestCode))
             easyLogin!!.onFacebookResult(requestCode, resultCode, data)
-        else if(EasyLoginImpl.isGoogleRequest(requestCode))
+        else if(EasyLogin.isGoogleRequest(requestCode))
             easyLogin!!.onGoogleResult(requestCode, resultCode, data)
 
     }

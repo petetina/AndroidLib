@@ -1,9 +1,10 @@
 package antoinepetetin.fr.easylogin
 
-import java.lang.Exception
-
 class EasyLoginException : Exception {
     private var loginType: LoginType? = null
+
+    constructor(message: String) : super(message) {
+    }
 
     constructor(message: String, loginType: LoginType) : super(message) {
         this.loginType = loginType

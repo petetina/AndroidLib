@@ -7,9 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
-import android.widget.Toast
 import antoinepetetin.fr.easylogin.EasyLoginCallbacks
-import antoinepetetin.fr.easylogin.EasyLoginImpl
+import antoinepetetin.fr.easylogin.EasyLogin
 import antoinepetetin.fr.easylogin.R
 import antoinepetetin.fr.easylogin.user.EasyUserProperty
 
@@ -28,7 +27,7 @@ class SignInButton @JvmOverloads constructor(
         view!!.findViewById<Button>(R.id.mySignInButton).setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 //Call login automatically
-                EasyLoginImpl(context as Activity,context as EasyLoginCallbacks).buildCustomLogin(arrayOf(EasyUserProperty.EMAIL)).login()
+                EasyLogin(context as Activity,context as EasyLoginCallbacks).buildCustomLogin(arrayOf(EasyUserProperty.EMAIL)).login()
             }
         })
 

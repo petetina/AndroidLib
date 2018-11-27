@@ -5,44 +5,33 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
-import antoinepetetin.fr.easylogin.*
+import antoinepetetin.fr.easylogin.Constants
+import antoinepetetin.fr.easylogin.EasyLoginConfig
+import antoinepetetin.fr.easylogin.EasyLoginException
+import antoinepetetin.fr.easylogin.LoginType
 import antoinepetetin.fr.easylogin.user.EasyFacebookUser
 import antoinepetetin.fr.easylogin.user.UserSessionManager
 import com.facebook.*
 import com.facebook.AccessToken
-import com.facebook.appevents.AppEventsLogger
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
+import com.facebook.login.widget.LoginButton
 import org.json.JSONException
 import org.json.JSONObject
 
 
-internal class FacebookLogin(var config: EasyLoginConfig): EasyLogin() {
+internal class FacebookLogin(config: EasyLoginConfig): LoginProcess(config) {
 
     private val callbackManager:CallbackManager
     init{
-        var facebookId = config
-            .getActivity()
-            .getPackageManager()
-            .getApplicationInfo(config.getActivity().baseContext.getPackageName(), PackageManager.GET_META_DATA)
-            .metaData
-            .getString("facebook_app_id")
-
-        if(facebookId == null)
-        {
-            throw java.lang.Exception("Please ensure that facebook_app_id is present in our manifest")
-        }else{
-            facebookId = facebookId.replace("string/","")
-        }
-
-        FacebookSdk.setApplicationId(facebookId);
-        FacebookSdk.sdkInitialize(config.getActivity().applicationContext);
-        AppEventsLogger.activateApp(config.getActivity().application);
         //Facebook login callback
         callbackManager = CallbackManager.Factory.create()
     }
 
     override fun login() {
+        //Really important because login can't be called if user is already connected
+        super.login()
+
         val activity = config.getActivity()
         val callback = config.getCallback()
         var permissions = config.getFacebookPermissions()
@@ -50,12 +39,12 @@ internal class FacebookLogin(var config: EasyLoginConfig): EasyLogin() {
         {
             permissions = EasyLoginConfig.getDefaultFacebookPermissions()
         }
-        //Launch an hidden activity to catch face result in onActivityResult
-        //var intent = Intent(config.getActivity().applicationContext, FacebookCallbackActivity::class.java)
-        //config.getActivity().applicationContext.startActivity(intent)
 
         LoginManager.getInstance().logInWithReadPermissions(activity, permissions)
-        LoginManager.getInstance().registerCallback(callbackManager, object:FacebookCallback<LoginResult> {
+    }
+
+    fun registerCallback(button: LoginButton){
+        button.registerCallback(callbackManager, object:FacebookCallback<LoginResult> {
             override fun onSuccess(loginResult:LoginResult) {
                 /*val request = GraphRequest.newMeRequest(loginResult.accessToken
                 ) { jsonObject, _ ->
@@ -71,8 +60,8 @@ internal class FacebookLogin(var config: EasyLoginConfig): EasyLogin() {
                     try {
                         val facebookUser = populateFacebookUser(`object`, loginResult.accessToken)
                         // Save the user
-                        UserSessionManager.setUserSession(activity, facebookUser)
-                        callback.onLoginSuccess(facebookUser!!)
+                        UserSessionManager.setUserSession(config.getActivity(), facebookUser)
+                        config.getCallback().onLoginSuccess(facebookUser!!)
                         /*
                         Log.d("plop", "fb json object: $`object`")
                         Log.d("plop", "fb graph response: $response")
@@ -107,11 +96,11 @@ internal class FacebookLogin(var config: EasyLoginConfig): EasyLogin() {
 
             override fun onCancel() {
                 Log.d("Facebook Login", "User cancelled the login process")
-                callback.onLoginFailure(EasyLoginException("User cancelled the login request", LoginType.Facebook))
+                config.getCallback().onLoginFailure(EasyLoginException("User cancelled the login request", LoginType.Facebook))
             }
 
             override fun onError(e:FacebookException) {
-                callback.onLoginFailure(EasyLoginException(e.message!!, e, LoginType.Facebook))
+                config.getCallback().onLoginFailure(EasyLoginException(e.message!!, e, LoginType.Facebook))
             }
         })
     }
@@ -142,7 +131,7 @@ internal class FacebookLogin(var config: EasyLoginConfig): EasyLogin() {
         callbackManager.onActivityResult(requestCode, resultCode, data)
     }
 
-    fun populateFacebookUser(`object`: JSONObject, accessToken: AccessToken): EasyFacebookUser? {
+    private fun populateFacebookUser(`object`: JSONObject, accessToken: AccessToken): EasyFacebookUser? {
         var facebookUser: EasyFacebookUser? = EasyFacebookUser()
         facebookUser?.gender = -1
         facebookUser?.accessToken  = accessToken
