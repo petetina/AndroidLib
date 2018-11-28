@@ -18,14 +18,16 @@
                 android:name="google_token_id"
                 android:value="603935733890-so7ep5dtck60hrqgsj319m8rvj0b5o38.apps.googleusercontent.com"/>
 
+        <activity android:name=".ConnectionActivity">
+        </activity>
+        <activity android:name=".UserConnectedActivity">
+        </activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-        </activity>
-        <activity android:name=".UserConnectedActivity">
         </activity>
     </application>
 

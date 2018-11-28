@@ -7,7 +7,7 @@ import antoinepetetin.fr.easylogin.Constants
 import com.google.gson.Gson
 
 
-internal object UserSessionManager {
+object UserSessionManager {
 
     fun isUserConnected(context: Context): Boolean {
         val preferences = context.getSharedPreferences(Constants.USER_PREFS, Context.MODE_PRIVATE)
