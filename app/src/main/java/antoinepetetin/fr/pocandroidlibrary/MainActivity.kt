@@ -30,10 +30,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode == 555){
             Toast.makeText(this,UserSessionManager.getCurrentUser(this).toString(), Toast.LENGTH_LONG).show()
-            /*
-            var intent = Intent(this, UserConnectedActivity::class.java)
-            startActivity(intent)
-        */
         }
     }
 
