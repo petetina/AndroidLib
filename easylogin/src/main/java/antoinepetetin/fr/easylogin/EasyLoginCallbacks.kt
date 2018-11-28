@@ -10,6 +10,8 @@ internal interface EasyLoginCallbacks {
 
     fun onLoginFailure(e: EasyLoginException)
 
+    fun onLogout()
+
     fun doCustomLogin(): EasyUser?
 
     fun doCustomSignup(): EasyUser?

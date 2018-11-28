@@ -21,37 +21,46 @@ import com.google.android.gms.common.api.GoogleApiClient
 internal class GoogleLogin(config: EasyLoginConfig) : LoginProcess(config), EasyLoginInterface {
 
     private var button: SignInButton? = null
+    private var apiClient: GoogleApiClient? = null
+    private var gso: GoogleSignInOptions? = null
+
+    init {
+        apiClient = config.getGoogleApiClient()
+        if (apiClient == null) {
+
+            val activity = config.getActivity()
+
+            //try to read google_token_id from developer's manifest project
+            var googleTokenId = activity
+                .packageManager
+                .getApplicationInfo(activity.packageName, PackageManager.GET_META_DATA)
+                .metaData.getString("google_token_id")
+
+            //Create google sigin options builder
+            var gsoBuilder = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .requestProfile()
+
+            //if token id is not null, pass it to the builder
+            if (googleTokenId !== null)
+                gsoBuilder!!.requestIdToken(googleTokenId)
+
+            gso = gsoBuilder.build()
+
+            //finally, create the apiClient from builder
+            apiClient = GoogleApiClient.Builder(activity)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso!!)
+                .build()
+        }
+    }
 
     override fun login() {
 
         if (isUserConnected()) {
             throwUserAlreadyConnectedFailure(LoginType.Google)
         } else {
-            var apiClient = config.getGoogleApiClient()
+
             val activity = config.getActivity()
-
-            if (apiClient == null) {
-
-                //try to read google_token_id from developer's manifest project
-                var googleTokenId = activity
-                    .packageManager
-                    .getApplicationInfo(activity.packageName, PackageManager.GET_META_DATA)
-                    .metaData.getString("google_token_id")
-
-                //Create google sigin options builder
-                var gsoBuilder = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                    .requestEmail()
-                    .requestProfile()
-
-                //if token id is not null, pass it to the builder
-                if (googleTokenId !== null)
-                    gsoBuilder.requestIdToken(googleTokenId)
-
-                //finally, create the apiClient from builder
-                apiClient = GoogleApiClient.Builder(activity)
-                    .addApi(Auth.GOOGLE_SIGN_IN_API, gsoBuilder.build())
-                    .build()
-            }
 
             val signInIntent = Auth.GoogleSignInApi.getSignInIntent(apiClient)
             activity.startActivityForResult(signInIntent, Constants.GOOGLE_LOGIN_REQUEST)
@@ -63,24 +72,21 @@ internal class GoogleLogin(config: EasyLoginConfig) : LoginProcess(config), Easy
     }
 
     override fun logout(context: Context): Boolean {
-        try {
-            val preferences = context.getSharedPreferences(Constants.USER_PREFS, Context.MODE_PRIVATE)
-            val editor = preferences.edit()
-            editor.remove(Constants.USER_TYPE)
-            editor.remove(Constants.USER_SESSION)
-            editor.apply()
-            return true
-        } catch (e: Exception) {
-            Log.e("GoogleLogin", e.message)
-            return false
+        var result = false
+        if(apiClient != null)
+        {
+            result = GoogleSignIn.getClient(config.getActivity(),gso!!)
+                .signOut().isSuccessful
         }
-
+        result = super.logout(context)
+        return result
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         // The Task returned from this call is always completed, no need to attach
         // a listener.
         val completedTask = GoogleSignIn.getSignedInAccountFromIntent(data)
+
         try {
             val account = completedTask.getResult(ApiException::class.java)
 

@@ -13,6 +13,7 @@ import android.app.ActivityManager
 import android.util.Log
 import antoinepetetin.fr.easylogin.EasyLoginActivity
 import android.content.res.TypedArray
+import antoinepetetin.fr.easylogin.user.UserSessionManager
 import kotlinx.android.synthetic.main.login_layout.view.*
 import java.util.*
 
@@ -31,26 +32,32 @@ class LoginLayout @JvmOverloads constructor(
         view = LayoutInflater.from(context)
             .inflate(R.layout.login_layout, this, true)
 
-        val map = getAttributes(attrs)
+        if(UserSessionManager.isUserConnected(context))
+            linearLayoutButtons.addView(SignOutButton(context))
+        else {
+            val map = getAttributes(attrs)
 
-        //Then add components to LoginLayout if attribut is present in map
-        for (mapData in map.entries) {
-            when(mapData.value){
-                "facebook" -> {
-                    linearLayoutButtons.addView(FacebookSignInButton(context))
+            //Then add components to LoginLayout if attribut is present in map
+            for (mapData in map.entries) {
+                when (mapData.value) {
+                    "facebook" -> {
+                        linearLayoutButtons.addView(FacebookSignInButton(context))
+                    }
+                    "google" -> {
+                        linearLayoutButtons.addView(GoogleSignInButton(context))
+                    }
+                    "custom" -> {
+                        val view = EmailPasswordView(context)
+                        emailField = view.email
+                        passwordField = view.password
+                        linearLayoutButtons.addView(view)
+                    }
                 }
-                "google" -> {
-                    linearLayoutButtons.addView(GoogleSignInButton(context))
-                }
-                "custom" -> {
-                    val view = EmailPasswordView(context)
-                    emailField = view.email
-                    passwordField = view.password
-                    linearLayoutButtons.addView(view)
-                }
+                Log.e("Custom attr", "Attributes : " + mapData.key + "Value : " + mapData.value)
             }
-            Log.e("Custom attr","Attributes : " + mapData.key + "Value : " + mapData.value)
         }
+
+
 
         orientation = VERTICAL
 

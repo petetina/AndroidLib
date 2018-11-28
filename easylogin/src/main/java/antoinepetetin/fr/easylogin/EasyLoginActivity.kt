@@ -50,6 +50,9 @@ open class EasyLoginActivity: AppCompatActivity(), EasyLoginCallbacks{
     override fun onLoginFailure(e: EasyLoginException) {
     }
 
+    override fun onLogout() {
+    }
+
     //Cette méthode sert à décrire de quoi est composé notre EasyUser
     //A notre charge de créer un easyuser en fonction de nos champs
     override fun doCustomLogin(): EasyUser? {

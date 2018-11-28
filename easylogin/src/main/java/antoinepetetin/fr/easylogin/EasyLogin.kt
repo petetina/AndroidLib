@@ -17,6 +17,7 @@ class EasyLogin {
     companion object {
         internal var facebookInstance: FacebookLogin? = null
         internal var googleInstance: GoogleLogin? = null
+        internal var customInstance: CustomLogin? = null
 
         fun isFacebookRequest(requestCode: Int): Boolean{
             return FacebookSdk.isFacebookRequestCode(requestCode)
@@ -61,23 +62,42 @@ class EasyLogin {
                 googleInstance = GoogleLogin(config!!)
                 return googleInstance!!
             }
-            else ->
+            else ->{
                 // To avoid null pointers
-                return CustomLogin(config!!)
+                customInstance = CustomLogin(config!!)
+                return customInstance!!
+            }
+
         }
     }
 
     fun buildCustomLogin(requiredFields: Array<EasyUserProperty>?): EasyLoginInterface{
-        return CustomLogin(config!!, requiredFields)
+        customInstance = CustomLogin(config!!, requiredFields)
+        return customInstance!!
     }
 
     fun buildCustomLogin(): EasyLoginInterface{
-        return CustomLogin(config!!)
+        customInstance = CustomLogin(config!!)
+        return customInstance!!
     }
 
     internal fun buildFacebookLogin(): FacebookLogin{
         facebookInstance = FacebookLogin(config!!)
         return facebookInstance!!
+    }
+
+    //Must call every disconnect authentification method (Facebook, Google, and Custom)
+    fun logout(){
+        facebookInstance?.let {
+            it.logout(config!!.getActivity())
+        }
+        googleInstance?.let {
+            it.logout(config!!.getActivity())
+        }
+        customInstance?.let {
+            it.logout(config!!.getActivity())
+        }
+        config!!.getCallback().onLogout()
     }
 
     fun onFacebookResult(requestCode: Int, resultCode: Int, data: Intent?) {

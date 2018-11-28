@@ -28,6 +28,11 @@ class ConnectionActivity : EasyLoginActivity()   {
         Toast.makeText(this,e.message, Toast.LENGTH_LONG).show()
     }
 
+    override fun onLogout() {
+        super.onLogout()
+        Toast.makeText(this, "Logged out !", Toast.LENGTH_LONG).show()
+    }
+
     override fun doCustomLogin(): EasyUser? {
 
         val email = loginLayout.getEmail() //Get the text from our custom layout :) amazing !!!

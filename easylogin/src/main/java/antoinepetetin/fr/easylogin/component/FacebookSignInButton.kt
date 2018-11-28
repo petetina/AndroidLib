@@ -9,7 +9,9 @@ import android.widget.Button
 import android.widget.LinearLayout
 import antoinepetetin.fr.easylogin.*
 import antoinepetetin.fr.easylogin.user.UserSessionManager
+import com.facebook.AccessTokenTracker
 import com.facebook.login.widget.LoginButton
+
 
 class FacebookSignInButton @JvmOverloads constructor(
     context: Context,
@@ -34,7 +36,6 @@ class FacebookSignInButton @JvmOverloads constructor(
             easyLogin.registerCallback(view!!.findViewById<LoginButton>(R.id.facebook_login_button))
         else
             easyLogin.throwUserAlreadyConnectedFailure(LoginType.Facebook)
-
 
         orientation = VERTICAL
 

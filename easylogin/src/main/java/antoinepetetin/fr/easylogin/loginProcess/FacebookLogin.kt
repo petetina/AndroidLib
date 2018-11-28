@@ -83,21 +83,8 @@ internal class FacebookLogin(config: EasyLoginConfig): LoginProcess(config), Eas
     }
 
     override fun logout(context: Context):Boolean {
-        try
-        {
-            val preferences = context.getSharedPreferences(Constants.USER_PREFS, Context.MODE_PRIVATE)
-            val editor = preferences.edit()
-            LoginManager.getInstance().logOut()
-            editor.remove(Constants.USER_TYPE)
-            editor.remove(Constants.USER_SESSION)
-            editor.apply()
-            return true
-        }
-        catch (e:Exception) {
-            Log.e("FacebookLogin", e.message)
-            return false
-        }
-
+        LoginManager.getInstance().logOut()
+        return super.logout(context)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
