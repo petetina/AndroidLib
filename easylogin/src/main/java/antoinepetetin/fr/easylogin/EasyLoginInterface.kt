@@ -2,19 +2,23 @@ package antoinepetetin.fr.easylogin
 
 import android.content.Context
 import android.content.Intent
-
+import android.view.View
 
 
 /**
  * A login screen that offers login via email/password.
  */
-abstract class EasyLoginInterface{
+interface EasyLoginInterface{
 
-    abstract fun login()
+    fun registerSignInButton(button: View)
 
-    abstract fun signup()
+    fun unbind()
 
-    abstract fun logout(context: Context): Boolean
+    fun login()
 
-    abstract fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
+    fun signup()
+
+    fun logout(context: Context): Boolean
+
+    fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
 }

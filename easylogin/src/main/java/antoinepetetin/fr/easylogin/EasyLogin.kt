@@ -15,8 +15,8 @@ class EasyLogin {
     private var config: EasyLoginConfig? = null
 
     companion object {
-        private var facebookInstance: FacebookLogin? = null
-        private var googleInstance: GoogleLogin? = null
+        internal var facebookInstance: FacebookLogin? = null
+        internal var googleInstance: GoogleLogin? = null
 
         fun isFacebookRequest(requestCode: Int): Boolean{
             return FacebookSdk.isFacebookRequestCode(requestCode)

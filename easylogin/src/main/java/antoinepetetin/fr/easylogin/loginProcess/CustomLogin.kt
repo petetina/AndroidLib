@@ -4,29 +4,32 @@ import android.content.Context
 import android.content.Intent
 import android.support.design.widget.TextInputLayout
 import android.util.Log
+import android.view.View
 import antoinepetetin.fr.easylogin.*
 import antoinepetetin.fr.easylogin.user.EasyUser
 import antoinepetetin.fr.easylogin.user.EasyUserProperty
 import antoinepetetin.fr.easylogin.user.UserSessionManager
 
-internal class CustomLogin(config: EasyLoginConfig, var requiredFields: Array<EasyUserProperty>? = null) : LoginProcess(config) {
+internal class CustomLogin(config: EasyLoginConfig, var requiredFields: Array<EasyUserProperty>? = null) : LoginProcess(config), EasyLoginInterface {
 
     override fun login() {
-        //Really important because login can't be called if user is already connected
-        super.login()
 
-        val user = config.getCallback().doCustomLogin()
-        if (user != null) {
+        if(isUserConnected()){
+            throwUserAlreadyConnectedFailure(LoginType.CustomLogin)
+        }else {
+            val user = config.getCallback().doCustomLogin()
+            if (user != null) {
 
-            //Check if user is valid
-            if(userIsValid(user)) {
-                // Save the user
-                UserSessionManager.setUserSession(config.getActivity(), user)
-                config.getCallback().onLoginSuccess(user)
-            }else
-                config.getCallback().onLoginFailure(EasyLoginException("User is not valid", LoginType.CustomLogin))
-        } else {
-            config.getCallback().onLoginFailure(EasyLoginException("Custom login failed", LoginType.CustomLogin))
+                //Check if user is valid
+                if (userIsValid(user)) {
+                    // Save the user
+                    UserSessionManager.setUserSession(config.getActivity(), user)
+                    config.getCallback().onLoginSuccess(user)
+                } else
+                    config.getCallback().onLoginFailure(EasyLoginException("User is not valid", LoginType.CustomLogin))
+            } else {
+                config.getCallback().onLoginFailure(EasyLoginException("Custom login failed", LoginType.CustomLogin))
+            }
         }
     }
 
@@ -97,5 +100,13 @@ internal class CustomLogin(config: EasyLoginConfig, var requiredFields: Array<Ea
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
+    }
+
+    override fun unbind() {
+        TODO("not implemented")
+    }
+
+    override fun registerSignInButton(button: View) {
+        TODO("not implemented")
     }
 }

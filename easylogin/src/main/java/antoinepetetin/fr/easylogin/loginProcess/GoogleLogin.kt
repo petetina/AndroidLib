@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.util.Log
+import android.view.View
 import antoinepetetin.fr.easylogin.*
 import antoinepetetin.fr.easylogin.user.EasyGoogleUser
 import antoinepetetin.fr.easylogin.user.UserSessionManager
@@ -12,44 +13,49 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.auth.api.signin.GoogleSignInStatusCodes
+import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.GoogleApiClient
 
 
-internal class GoogleLogin(config: EasyLoginConfig) : LoginProcess(config) {
+internal class GoogleLogin(config: EasyLoginConfig) : LoginProcess(config), EasyLoginInterface {
+
+    private var button: SignInButton? = null
 
     override fun login() {
-        //Really important because login can't be called if user is already connected
-        super.login()
 
-        var apiClient = config.getGoogleApiClient()
-        val activity = config.getActivity()
+        if (isUserConnected()) {
+            throwUserAlreadyConnectedFailure(LoginType.Google)
+        } else {
+            var apiClient = config.getGoogleApiClient()
+            val activity = config.getActivity()
 
-        if (apiClient == null) {
+            if (apiClient == null) {
 
-            //try to read google_token_id from developer's manifest project
-            var googleTokenId = activity
-                .packageManager
-                .getApplicationInfo(activity.packageName, PackageManager.GET_META_DATA)
-                .metaData.getString("google_token_id")
+                //try to read google_token_id from developer's manifest project
+                var googleTokenId = activity
+                    .packageManager
+                    .getApplicationInfo(activity.packageName, PackageManager.GET_META_DATA)
+                    .metaData.getString("google_token_id")
 
-            //Create google sigin options builder
-            var gsoBuilder = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .requestProfile()
+                //Create google sigin options builder
+                var gsoBuilder = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                    .requestEmail()
+                    .requestProfile()
 
-            //if token id is not null, pass it to the builder
-            if(googleTokenId !== null)
-                gsoBuilder.requestIdToken(googleTokenId)
+                //if token id is not null, pass it to the builder
+                if (googleTokenId !== null)
+                    gsoBuilder.requestIdToken(googleTokenId)
 
-            //finally, create the apiClient from builder
-            apiClient = GoogleApiClient.Builder(activity)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gsoBuilder.build())
-                .build()
+                //finally, create the apiClient from builder
+                apiClient = GoogleApiClient.Builder(activity)
+                    .addApi(Auth.GOOGLE_SIGN_IN_API, gsoBuilder.build())
+                    .build()
+            }
+
+            val signInIntent = Auth.GoogleSignInApi.getSignInIntent(apiClient)
+            activity.startActivityForResult(signInIntent, Constants.GOOGLE_LOGIN_REQUEST)
         }
-
-        val signInIntent = Auth.GoogleSignInApi.getSignInIntent(apiClient)
-        activity.startActivityForResult(signInIntent, Constants.GOOGLE_LOGIN_REQUEST)
     }
 
     override fun signup() {
@@ -83,6 +89,7 @@ internal class GoogleLogin(config: EasyLoginConfig) : LoginProcess(config) {
 
             // Save the user
             UserSessionManager.setUserSession(config.getActivity(), googleUser)
+            //TODO unbind facebook callback !!
             config.getCallback().onLoginSuccess(googleUser)
 
         } catch (e: ApiException) {
@@ -118,5 +125,13 @@ internal class GoogleLogin(config: EasyLoginConfig) : LoginProcess(config) {
 
         //return the populated google user
         return googleUser
+    }
+
+    override fun registerSignInButton(button: View) {
+        this.button = button as SignInButton
+    }
+
+    override fun unbind() {
+
     }
 }

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import antoinepetetin.fr.easylogin.EasyLoginActivity
+import antoinepetetin.fr.easylogin.EasyLoginException
 import antoinepetetin.fr.easylogin.user.EasyUser
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -27,6 +28,11 @@ class MainActivity : EasyLoginActivity()   {
         intent.putExtra("user",user)
         startActivity(intent)
 
+    }
+
+    override fun onLoginFailure(e: EasyLoginException) {
+        super.onLoginFailure(e)
+        Toast.makeText(this,e.message, Toast.LENGTH_LONG).show()
     }
 
     override fun doCustomLogin(): EasyUser? {

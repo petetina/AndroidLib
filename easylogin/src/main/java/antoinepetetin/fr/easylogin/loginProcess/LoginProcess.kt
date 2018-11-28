@@ -2,26 +2,16 @@ package antoinepetetin.fr.easylogin.loginProcess
 
 import android.content.Context
 import android.content.Intent
-import antoinepetetin.fr.easylogin.EasyLoginCallbacks
-import antoinepetetin.fr.easylogin.EasyLoginConfig
-import antoinepetetin.fr.easylogin.EasyLoginException
-import antoinepetetin.fr.easylogin.EasyLoginInterface
+import antoinepetetin.fr.easylogin.*
 import antoinepetetin.fr.easylogin.user.UserSessionManager
 
-internal abstract class LoginProcess(var config: EasyLoginConfig) : EasyLoginInterface() {
+internal abstract class LoginProcess(var config: EasyLoginConfig) {
 
-    override fun login() {
-        if(UserSessionManager.isUserConnected(config.getActivity().applicationContext))
-        {
-            (config.getActivity() as EasyLoginCallbacks).onLoginFailure(EasyLoginException("User is already connected"))
-            // stop login process if user is already connected !
-            return
-        }
+    fun isUserConnected(): Boolean{
+        return UserSessionManager.isUserConnected(config.getActivity().applicationContext)
     }
 
-    abstract override fun signup()
-
-    abstract override fun logout(context: Context): Boolean
-
-    abstract override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
+    fun throwUserAlreadyConnectedFailure(loginType: LoginType){
+        config.getCallback().onLoginFailure(EasyLoginException("User is already connected", loginType))
+    }
 }
