@@ -34,6 +34,7 @@ class GoogleSignInButton @JvmOverloads constructor(
             }
         })
 
+
         orientation = VERTICAL
     }
 

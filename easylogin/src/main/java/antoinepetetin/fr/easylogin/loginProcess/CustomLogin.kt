@@ -49,10 +49,6 @@ internal class CustomLogin(config: EasyLoginConfig, var requiredFields: Array<Ea
                             val emailOk = EasyUserVerification.checkEmail(user.email)
                             //Get email view and display/hide error
                             var email = config.getActivity().window.decorView.findViewWithTag<TextInputLayout>("email")
-                            if(email == null)
-                                Log.e("evidemment", "c'est nul")
-                            else
-                                Log.e("c'est cool", "pas null")
 
                             if(emailOk)
                                 email.error = null

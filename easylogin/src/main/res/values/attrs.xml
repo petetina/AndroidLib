@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="LoginLayout">
+        <attr name="custom" format="integer"/>
+        <attr name="facebook" format="integer"/>
+        <attr name="google" format="integer"/>
+    </declare-styleable>
+</resources>

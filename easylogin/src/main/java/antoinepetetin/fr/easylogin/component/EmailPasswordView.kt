@@ -38,6 +38,9 @@ class EmailPasswordView @JvmOverloads constructor(
         view = LayoutInflater.from(context)
             .inflate(R.layout.email_password_login_layout, this, true)
 
+        view!!.findViewById<LinearLayout>(R.id.email_password_login_layout).addView(SignInButton(context))
+        view!!.findViewById<LinearLayout>(R.id.email_password_login_layout).addView(SignUpButton(context))
+
         orientation = VERTICAL
 
     }
