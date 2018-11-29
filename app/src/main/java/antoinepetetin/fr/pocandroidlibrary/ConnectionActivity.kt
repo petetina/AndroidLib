@@ -35,10 +35,13 @@ class ConnectionActivity : EasyLoginActivity()   {
 
     override fun doCustomLogin(): EasyUser? {
 
+        /*
         val email = loginLayout.getEmail() //Get the text from our custom layout :) amazing !!!
         val password = loginLayout.getPassword() //Get the text from our custom layout :) amazing !!!
 
         return loginUser(email, password)
+        */
+        return null
     }
 
     //My private function that check if user is connected, like API Call :)

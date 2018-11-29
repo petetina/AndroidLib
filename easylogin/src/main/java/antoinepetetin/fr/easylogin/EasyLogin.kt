@@ -71,12 +71,12 @@ class EasyLogin {
         }
     }
 
-    fun buildCustomLogin(requiredFields: Array<EasyUserProperty>?): EasyLoginInterface{
+    fun buildCustomLogin(requiredFields: Array<EasyUserProperty>?): CustomLogin{
         customInstance = CustomLogin(config!!, requiredFields)
         return customInstance!!
     }
 
-    fun buildCustomLogin(): EasyLoginInterface{
+    fun buildCustomLogin(): CustomLogin{
         customInstance = CustomLogin(config!!)
         return customInstance!!
     }

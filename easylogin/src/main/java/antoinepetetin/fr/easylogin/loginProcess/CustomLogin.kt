@@ -10,7 +10,7 @@ import antoinepetetin.fr.easylogin.user.EasyUser
 import antoinepetetin.fr.easylogin.user.EasyUserProperty
 import antoinepetetin.fr.easylogin.user.UserSessionManager
 
-internal class CustomLogin(config: EasyLoginConfig, var requiredFields: Array<EasyUserProperty>? = null) : LoginProcess(config), EasyLoginInterface {
+class CustomLogin(config: EasyLoginConfig, var requiredFields: Array<EasyUserProperty>? = null) : LoginProcess(config), EasyLoginInterface {
 
     override fun login() {
 
@@ -48,12 +48,12 @@ internal class CustomLogin(config: EasyLoginConfig, var requiredFields: Array<Ea
                         EasyUserProperty.EMAIL -> {
                             val emailOk = EasyUserVerification.checkEmail(user.email)
                             //Get email view and display/hide error
-                            var email = config.getActivity().window.decorView.findViewWithTag<TextInputLayout>("email")
+                            var email = (config.getActivity() as ConnectedActivity).dialog!!.loginLayout!!.emailField
 
                             if(emailOk)
-                                email.error = null
+                                email!!.error = null
                             else
-                                email.error = "Invalid email"
+                                email!!.error = "Invalid email"
 
                             isValid = isValid.and(emailOk)
                         }

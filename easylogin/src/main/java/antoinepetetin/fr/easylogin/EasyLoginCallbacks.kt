@@ -2,7 +2,7 @@ package antoinepetetin.fr.easylogin
 
 import antoinepetetin.fr.easylogin.user.EasyUser
 
-internal interface EasyLoginCallbacks {
+interface EasyLoginCallbacks {
 
     fun unbindLoginComponents()
 

@@ -8,6 +8,9 @@ import android.view.View
 import antoinepetetin.fr.easylogin.user.EasyUser
 
 open class EasyLoginActivity: AppCompatActivity(), EasyLoginCallbacks{
+    companion object {
+        val EASY_LOGIN_REQUEST_CODE = 555
+    }
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         super.onCreate(savedInstanceState, persistentState)
     }

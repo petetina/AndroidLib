@@ -5,7 +5,7 @@ import android.content.pm.PackageManager
 import com.google.android.gms.common.api.GoogleApiClient
 
 
-internal class EasyLoginConfig {
+class EasyLoginConfig {
     private var facebookAppId: String? = null
     private var googleTokenId: String? = null
     private var facebookPermissions: ArrayList<String>? = null

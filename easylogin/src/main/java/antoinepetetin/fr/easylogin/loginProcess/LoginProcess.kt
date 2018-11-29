@@ -7,7 +7,7 @@ import antoinepetetin.fr.easylogin.*
 import antoinepetetin.fr.easylogin.user.UserSessionManager
 import com.facebook.login.LoginManager
 
-internal abstract class LoginProcess(var config: EasyLoginConfig) {
+abstract class LoginProcess(var config: EasyLoginConfig) {
 
     fun isUserConnected(): Boolean{
         return UserSessionManager.isUserConnected(config.getActivity().applicationContext)

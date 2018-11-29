@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+        android:id="@+id/easyLoginActivityLinearLayout"
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:easylogin="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:background="@android:color/white"
-        android:orientation="vertical"
->
+        android:orientation="vertical">
 
 
-    <antoinepetetin.fr.easylogin.component.LoginLayout
+    <!--antoinepetetin.fr.easylogin.component.LoginLayout
             android:id="@+id/loginLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             easylogin:custom="0"
             easylogin:facebook="1"
             easylogin:google="2"
-    />
+    /-->
 </LinearLayout>

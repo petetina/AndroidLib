@@ -13,6 +13,7 @@ import android.app.ActivityManager
 import android.util.Log
 import antoinepetetin.fr.easylogin.EasyLoginActivity
 import android.content.res.TypedArray
+import antoinepetetin.fr.easylogin.loginProcess.CustomLogin
 import antoinepetetin.fr.easylogin.user.UserSessionManager
 import kotlinx.android.synthetic.main.login_layout.view.*
 import java.util.*
@@ -24,8 +25,8 @@ class LoginLayout @JvmOverloads constructor(
     defStyle: Int = 0
 ) : LinearLayout(context, attrs, defStyle) {
     private var view: View? = null
-    private var emailField : EditText? = null
-    private var passwordField : EditText? = null
+    var emailField : EditText? = null
+    var passwordField : EditText? = null
 
     init {
 
@@ -109,6 +110,21 @@ class LoginLayout @JvmOverloads constructor(
         }
         array.recycle()
         return map
+    }
+
+    fun addFacebookButton(){
+        linearLayoutButtons.addView(FacebookSignInButton(context))
+    }
+
+    fun addGoogleButton(){
+        linearLayoutButtons.addView(GoogleSignInButton(context))
+    }
+
+    fun addCustomLogin(){
+        val view = EmailPasswordView(context)
+        emailField = view.email
+        passwordField = view.password
+        linearLayoutButtons.addView(view)
     }
 
 
