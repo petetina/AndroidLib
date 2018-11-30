@@ -3,23 +3,17 @@ package antoinepetetin.fr.pocandroidlibrary
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import antoinepetetin.fr.easylogin.ConnectedActivity
-import antoinepetetin.fr.easylogin.ConnectedActivityInterface
 import antoinepetetin.fr.easylogin.user.EasyUser
 import antoinepetetin.fr.pocandroidlibrary.databinding.ActivityUserConnectedBinding
 import java.util.*
 
-class UserConnectedActivityInterface : ConnectedActivity() {
+class UserConnectedActivity : ConnectedActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         //do nothing here, do all stuff on doOnCreate method !!
 
-    }
-
-    override fun onLogout() {
-        super.onLogout()
-        finish()
     }
 
     //Do all stuff here when user is connected
@@ -33,6 +27,12 @@ class UserConnectedActivityInterface : ConnectedActivity() {
 
     }
 
+    override fun onLogout() {
+        super.onLogout()
+        finish()
+    }
+
+
     override fun doCustomLogin(): EasyUser? {
         val email = dialog!!.getEmail() //Get the text from our custom layout :) amazing !!!
         val password = dialog!!.getPassword() //Get the text from our custom layout :) amazing !!!
@@ -42,20 +42,12 @@ class UserConnectedActivityInterface : ConnectedActivity() {
 
     //My private function that check if user is connected, like API Call :)
     private fun loginUser(email: String, password: String): EasyUser?{
-        val random = Random()
-        var result: EasyUser? = null
-        if(random.nextBoolean())
-        {
-            val user = EasyUser()
-            user.userId = "1"
-            user.email = email
-            user.firstName = "Antoine"
-            user.lastName = "Petetin"
+        val user = EasyUser()
+        user.userId = "1"
+        user.email = email
+        user.firstName = "Antoine"
+        user.lastName = "Petetin"
 
-            result = user
-        }else
-            result = null
-
-        return result
+        return user
     }
 }

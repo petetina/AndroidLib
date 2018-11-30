@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when(v!!.id){
             R.id.paymentButton -> {
-                val intent = Intent(this, UserConnectedActivityInterface::class.java)
+                val intent = Intent(this, UserConnectedActivity::class.java)
                 startActivity(intent)
             }
         }

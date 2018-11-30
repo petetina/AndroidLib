@@ -7,6 +7,7 @@ import antoinepetetin.fr.easylogin.loginProcess.CustomLogin
 import antoinepetetin.fr.easylogin.loginProcess.FacebookLogin
 import antoinepetetin.fr.easylogin.loginProcess.GoogleLogin
 import antoinepetetin.fr.easylogin.user.EasyUserProperty
+import antoinepetetin.fr.easylogin.user.UserSessionManager
 import com.facebook.FacebookSdk
 import com.facebook.appevents.AppEventsLogger
 
@@ -48,6 +49,11 @@ class EasyLogin {
         FacebookSdk.setApplicationId(facebookId);
         FacebookSdk.sdkInitialize(activity.applicationContext);
         AppEventsLogger.activateApp(activity.application);
+
+        val loginType = UserSessionManager.getTypeConnection(activity)
+
+        if(loginType != null)
+         build(loginType)
     }
 
 

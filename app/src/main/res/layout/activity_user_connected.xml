@@ -6,45 +6,51 @@
         <variable name="user" type="antoinepetetin.fr.easylogin.user.EasyUser"/>
     </data>
     <LinearLayout
-
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".UserConnectedActivityInterface"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_vertical_margin"
+            android:paddingRight="@dimen/activity_vertical_margin"
             android:orientation="vertical">
 
-        <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text='@{"userId : " + user.userId}'/>
 
-        <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text='@{"username : " + user.username}'/>
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text='@{"Bienvenue " + user.firstName + " " + user.lastName}'
+                    tools:text="Bienvenue Mickaël Lignier"
+                    android:textSize="24sp"
+                    android:layout_weight="0.3"
+                    android:gravity="center"/>
 
-        <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text='@{"firstName : " + user.firstName}'/>
 
-        <TextView
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:orientation="vertical"
+    >
+        <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text='@{"lastname : " + user.lastName}'/>
+                android:hint="@string/card_number" />
 
-        <TextView
+        <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text='@{"email : " + user.email}'/>
+                android:hint="@string/expiration_text" />
 
-        <TextView
+        <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text='@{"birthday : " + user.birthday}'/>
+                android:hint="@string/crypto" />
+    </LinearLayout>
 
         <antoinepetetin.fr.easylogin.component.SignOutButton
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"/>
 
     </LinearLayout>
 </layout>

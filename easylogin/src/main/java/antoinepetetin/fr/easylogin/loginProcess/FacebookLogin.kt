@@ -55,7 +55,7 @@ internal class FacebookLogin(config: EasyLoginConfig): LoginProcess(config), Eas
                     parameters.putString(
                         "fields",
                         "id,first_name,last_name,email,gender,birthday"
-                    ) // id,first_name,last_name,email,gender,birthday,cover,picture.type(large)
+                    )
                     request.parameters = parameters
 
                     if(isUserConnected())

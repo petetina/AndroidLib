@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
 import antoinepetetin.fr.easylogin.Constants
+import antoinepetetin.fr.easylogin.LoginType
 import com.google.gson.Gson
 
 
@@ -41,6 +42,17 @@ object UserSessionManager {
 
         }
         return easyUser
+    }
+
+    fun getTypeConnection(context: Context): LoginType? {
+        val preferences = context.getSharedPreferences(Constants.USER_PREFS, Context.MODE_PRIVATE)
+        val user_type = preferences.getString(Constants.USER_TYPE, Constants.CUSTOMUSERFLAG)
+        when (user_type) {
+            Constants.FACEBOOKFLAG -> return LoginType.Facebook
+            Constants.GOOGLEFLAG -> return LoginType.Google
+            Constants.CUSTOMUSERFLAG -> return LoginType.CustomLogin
+            else -> return null
+        }
     }
 
     /**
