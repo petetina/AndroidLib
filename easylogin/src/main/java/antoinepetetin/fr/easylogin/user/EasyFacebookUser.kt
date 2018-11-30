@@ -3,7 +3,6 @@ package antoinepetetin.fr.easylogin.user
 import android.os.Parcelable
 import com.facebook.AccessToken
 import kotlinx.android.parcel.Parcelize
-import java.io.Serializable
 
 @Parcelize
 internal open class EasyFacebookUser(var profileName: String? = null,

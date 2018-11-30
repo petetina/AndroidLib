@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.util.Log
-import android.view.View
 import antoinepetetin.fr.easylogin.*
 import antoinepetetin.fr.easylogin.user.EasyGoogleUser
 import antoinepetetin.fr.easylogin.user.UserSessionManager
@@ -13,14 +12,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.auth.api.signin.GoogleSignInStatusCodes
-import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.GoogleApiClient
 
 
 internal class GoogleLogin(config: EasyLoginConfig) : LoginProcess(config), EasyLoginInterface {
 
-    private var button: SignInButton? = null
     private var apiClient: GoogleApiClient? = null
     private var gso: GoogleSignInOptions? = null
 
@@ -131,13 +128,5 @@ internal class GoogleLogin(config: EasyLoginConfig) : LoginProcess(config), Easy
 
         //return the populated google user
         return googleUser
-    }
-
-    override fun registerSignInButton(button: View) {
-        this.button = button as SignInButton
-    }
-
-    override fun unbind() {
-
     }
 }

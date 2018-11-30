@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
 import antoinepetetin.fr.easylogin.*
-import com.facebook.login.widget.LoginButton
 import com.google.android.gms.common.SignInButton
 
 class GoogleSignInButton @JvmOverloads constructor(

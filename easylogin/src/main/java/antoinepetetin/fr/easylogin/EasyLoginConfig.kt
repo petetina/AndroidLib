@@ -7,7 +7,6 @@ import com.google.android.gms.common.api.GoogleApiClient
 
 class EasyLoginConfig {
     private var facebookAppId: String? = null
-    private var googleTokenId: String? = null
     private var facebookPermissions: ArrayList<String>? = null
     private var googleApiClient: GoogleApiClient? = null
     private val activity: Activity
@@ -35,7 +34,9 @@ class EasyLoginConfig {
         this.googleApiClient = googleApiClient
     }
 
-    //Read facebook app id from manifest ;)
+    /*
+     * Read facebook app id from manifest
+     */
     fun getFacebookAppId(): String? {
         val ai = activity.packageManager.getApplicationInfo(activity.packageName, PackageManager.GET_META_DATA)
         val myApiKey = ai.metaData.getString("facebook_app_id")

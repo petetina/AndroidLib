@@ -44,6 +44,10 @@ object UserSessionManager {
         return easyUser
     }
 
+    /*
+     * This method return the connection type if user is connected, else null
+     */
+
     fun getTypeConnection(context: Context): LoginType? {
         val preferences = context.getSharedPreferences(Constants.USER_PREFS, Context.MODE_PRIVATE)
         val user_type = preferences.getString(Constants.USER_TYPE, Constants.CUSTOMUSERFLAG)

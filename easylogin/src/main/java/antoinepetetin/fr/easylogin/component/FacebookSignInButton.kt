@@ -9,7 +9,6 @@ import android.widget.Button
 import android.widget.LinearLayout
 import antoinepetetin.fr.easylogin.*
 import antoinepetetin.fr.easylogin.user.UserSessionManager
-import com.facebook.AccessTokenTracker
 import com.facebook.login.widget.LoginButton
 
 

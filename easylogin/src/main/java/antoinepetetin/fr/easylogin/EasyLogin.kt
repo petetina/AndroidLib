@@ -50,12 +50,17 @@ class EasyLogin {
         FacebookSdk.sdkInitialize(activity.applicationContext);
         AppEventsLogger.activateApp(activity.application);
 
-        val loginType = UserSessionManager.getTypeConnection(activity)
 
-        if(loginType != null)
-         build(loginType)
+        initInstances()
     }
 
+
+    private fun initInstances(){
+        val loginType = UserSessionManager.getTypeConnection(config!!.getActivity())
+
+        if(loginType != null)
+            build(loginType)
+    }
 
     fun build(loginType: LoginType): EasyLoginInterface {
 
@@ -77,14 +82,15 @@ class EasyLogin {
         }
     }
 
-    fun buildCustomLogin(requiredFields: Array<EasyUserProperty>?): CustomLogin{
-        customInstance = CustomLogin(config!!, requiredFields)
-        return customInstance!!
-    }
+    fun buildCustomLogin(requiredFields: Array<EasyUserProperty>? = null): CustomLogin{
+        if(requiredFields == null){
+            customInstance = CustomLogin(config!!)
+        }else{
+            customInstance = CustomLogin(config!!, requiredFields)
 
-    fun buildCustomLogin(): CustomLogin{
-        customInstance = CustomLogin(config!!)
+        }
         return customInstance!!
+
     }
 
     internal fun buildFacebookLogin(): FacebookLogin{

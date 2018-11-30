@@ -2,18 +2,12 @@ package antoinepetetin.fr.easylogin.component
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.EditText
 import android.widget.LinearLayout
 import antoinepetetin.fr.easylogin.R
-import android.content.ComponentName
-import android.support.v4.content.ContextCompat.getSystemService
-import android.app.ActivityManager
-import android.util.Log
-import antoinepetetin.fr.easylogin.EasyLoginActivity
-import android.content.res.TypedArray
-import antoinepetetin.fr.easylogin.loginProcess.CustomLogin
 import antoinepetetin.fr.easylogin.user.UserSessionManager
 import kotlinx.android.synthetic.main.login_layout.view.*
 import java.util.*

@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import antoinepetetin.fr.easylogin.*
 import antoinepetetin.fr.easylogin.user.EasyFacebookUser
 import antoinepetetin.fr.easylogin.user.UserSessionManager
@@ -19,7 +18,6 @@ import org.json.JSONObject
 internal class FacebookLogin(config: EasyLoginConfig): LoginProcess(config), EasyLoginInterface {
 
     private val callbackManager:CallbackManager
-    private var button: LoginButton? = null
 
     init{
         //Facebook login callback
@@ -133,13 +131,4 @@ internal class FacebookLogin(config: EasyLoginConfig): LoginProcess(config), Eas
         return facebookUser
     }
 
-    override fun registerSignInButton(button: View) {
-        this.button = button as LoginButton
-    }
-
-    override fun unbind() {
-        this.button?.let {
-            it.unregisterCallback(callbackManager)
-        }
-    }
 }

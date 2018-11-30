@@ -2,7 +2,6 @@ package antoinepetetin.fr.easylogin.user
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
-import java.io.Serializable
 
 @Parcelize
 open class EasyUser(var userId: String? = null,

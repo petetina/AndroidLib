@@ -7,8 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
-import antoinepetetin.fr.easylogin.EasyLoginCallbacks
 import antoinepetetin.fr.easylogin.EasyLogin
+import antoinepetetin.fr.easylogin.EasyLoginCallbacks
 import antoinepetetin.fr.easylogin.R
 import antoinepetetin.fr.easylogin.user.EasyUserProperty
 

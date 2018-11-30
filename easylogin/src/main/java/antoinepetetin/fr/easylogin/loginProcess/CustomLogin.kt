@@ -2,9 +2,7 @@ package antoinepetetin.fr.easylogin.loginProcess
 
 import android.content.Context
 import android.content.Intent
-import android.support.design.widget.TextInputLayout
 import android.util.Log
-import android.view.View
 import antoinepetetin.fr.easylogin.*
 import antoinepetetin.fr.easylogin.user.EasyUser
 import antoinepetetin.fr.easylogin.user.EasyUserProperty
@@ -96,13 +94,5 @@ class CustomLogin(config: EasyLoginConfig, var requiredFields: Array<EasyUserPro
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
-    }
-
-    override fun unbind() {
-        TODO("not implemented")
-    }
-
-    override fun registerSignInButton(button: View) {
-        TODO("not implemented")
     }
 }

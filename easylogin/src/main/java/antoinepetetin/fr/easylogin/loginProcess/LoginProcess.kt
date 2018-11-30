@@ -1,9 +1,11 @@
 package antoinepetetin.fr.easylogin.loginProcess
 
 import android.content.Context
-import android.content.Intent
 import android.util.Log
-import antoinepetetin.fr.easylogin.*
+import antoinepetetin.fr.easylogin.Constants
+import antoinepetetin.fr.easylogin.EasyLoginConfig
+import antoinepetetin.fr.easylogin.EasyLoginException
+import antoinepetetin.fr.easylogin.LoginType
 import antoinepetetin.fr.easylogin.user.UserSessionManager
 import com.facebook.login.LoginManager
 

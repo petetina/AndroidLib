@@ -5,7 +5,6 @@ import android.os.Bundle
 import antoinepetetin.fr.easylogin.ConnectedActivity
 import antoinepetetin.fr.easylogin.user.EasyUser
 import antoinepetetin.fr.pocandroidlibrary.databinding.ActivityUserConnectedBinding
-import java.util.*
 
 class UserConnectedActivity : ConnectedActivity() {
 

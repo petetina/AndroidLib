@@ -4,40 +4,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.support.v7.app.AppCompatActivity
-import android.view.View
 import antoinepetetin.fr.easylogin.user.EasyUser
 
 open class EasyLoginActivity: AppCompatActivity(), EasyLoginCallbacks{
-    companion object {
-        val EASY_LOGIN_REQUEST_CODE = 555
-    }
+    private var easyLogin: EasyLogin? = null
+
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         super.onCreate(savedInstanceState, persistentState)
     }
-
-    override fun unbindLoginComponents() {
-
-    }
-
-    fun registerSignInComponent(button: View, logintype: LoginType){
-        when(logintype){
-            LoginType.Facebook -> {
-                EasyLogin.facebookInstance?.let {
-                    it.registerSignInButton(button)
-                }
-            }
-            LoginType.Google ->{
-                EasyLogin.googleInstance?.let {
-                    it.registerSignInButton(button)
-                }
-            }
-            LoginType.CustomLogin ->{
-                TODO("register sign in button for custom login")
-            }
-        }
-    }
-
-    private var easyLogin: EasyLogin? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
