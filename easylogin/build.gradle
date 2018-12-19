@@ -69,7 +69,7 @@ publishing {
         bar(MavenPublication) {
             groupId 'fr.hardis'
             artifactId 'easylogin'
-            version '0.1'
+            version '0.1-alpha'
             artifact("$buildDir/outputs/aar/easylogin-release.aar")
         }
     }
