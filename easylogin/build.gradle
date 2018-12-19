@@ -70,7 +70,7 @@ publishing {
             groupId 'fr.hardis'
             artifactId 'easylogin'
             version '0.1'
-            artifact("$buildDir/outputs/aar/mylibrary-release.aar")
+            artifact("$buildDir/outputs/aar/easylogin-release.aar")
         }
     }
     repositories {
