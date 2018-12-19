@@ -23,9 +23,6 @@ class GoogleSignInButton @JvmOverloads constructor(
 
         var easyLogin = EasyLogin(context as Activity,context as EasyLoginCallbacks).build(LoginType.Google)
 
-        //Register the button to our library
-        (context as EasyLoginActivity).registerSignInComponent(view!!.findViewById<SignInButton>(R.id.google_login_button), LoginType.Google)
-
         view!!.findViewById<SignInButton>(R.id.google_login_button).setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 //Call login automatically

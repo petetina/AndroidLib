@@ -28,9 +28,6 @@ class FacebookSignInButton @JvmOverloads constructor(
 
         var easyLogin = EasyLogin(context as Activity,context as EasyLoginCallbacks).buildFacebookLogin()
 
-        //Register the button to our library
-        (context as EasyLoginActivity).registerSignInComponent(view!!.findViewById<LoginButton>(R.id.facebook_login_button), LoginType.Facebook)
-
         if(!UserSessionManager.isUserConnected(context))
             easyLogin.registerCallback(view!!.findViewById<LoginButton>(R.id.facebook_login_button))
         else
