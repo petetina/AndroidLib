@@ -2,6 +2,9 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
+//To publish aar
+apply plugin: 'maven-publish'
+
 android {
     compileSdkVersion 28
 
@@ -57,4 +60,27 @@ dependencies {
 
     // GSON
     implementation 'com.google.code.gson:gson:2.8.5'
+}
+
+
+//Add this for gradle publish task
+publishing {
+    publications {
+        bar(MavenPublication) {
+            groupId 'fr.hardis'
+            artifactId 'easylogin'
+            version '0.1'
+            artifact("$buildDir/outputs/aar/mylibrary-release.aar")
+        }
+    }
+    repositories {
+        maven {
+            url 'https://pkgs.dev.azure.com/antoinepetetin/_packaging/HardisRepositories/maven/v1'
+            credentials {
+                username "AZURE_ARTIFACTS"
+                //This token will expire on 19/03/2019
+                password "yrvwgh2ebfruxrzw2i7d4dak2oydfq5lmmejhc47rbjfnyszixdq"
+            }
+        }
+    }
 }
