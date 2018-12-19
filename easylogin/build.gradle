@@ -69,7 +69,7 @@ publishing {
         aar(MavenPublication) {
             groupId 'fr.hardis'
             artifactId 'easylogin'
-            version '0.1-alpha'
+            version '0.01-alpha'
             //artifact("$buildDir/outputs/aar/easylogin-release.aar")
 
             //Add librairies dependencies to generated pom.xml, else we will get a NoClassDefFoundError exception
