@@ -13,8 +13,8 @@ android {
     defaultConfig {
         minSdkVersion 17
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        versionCode Integer.parseInt(project.LIBRARY_VERSION_CODE)
+        versionName project.LIBRARY_VERSION_NAME
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -69,7 +69,8 @@ publishing {
         aar(MavenPublication) {
             groupId 'fr.hardis'
             artifactId 'easylogin'
-            version '0.01-alpha'
+            //version '0.01-alpha'
+            version project.LIBRARY_VERSION_NAME
             //artifact("$buildDir/outputs/aar/easylogin-release.aar")
 
             //Add librairies dependencies to generated pom.xml, else we will get a NoClassDefFoundError exception
