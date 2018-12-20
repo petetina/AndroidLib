@@ -97,7 +97,7 @@ publishing {
             credentials {
                 username "AZURE_ARTIFACTS"
                 //This token will expire on 19/03/2019
-                password "yrvwgh2ebfruxrzw2i7d4dak2oydfq5lmmejhc47rbjfnyszixdq"
+                password project.AZURE_TOKEN
             }
         }
     }
