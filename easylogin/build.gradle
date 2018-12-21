@@ -100,5 +100,14 @@ publishing {
                 password project.AZURE_TOKEN
             }
         }
+
+        maven {
+            url 'https://pkgs.dev.azure.com/antoinepetetin/_packaging/HardisRepositories/maven/v1'
+            credentials {
+                username "AZURE_ARTIFACTS"
+                //This token will expire on 19/03/2019
+                password project.AZURE_TOKEN
+            }
+        }
     }
 }
