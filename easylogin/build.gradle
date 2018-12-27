@@ -5,6 +5,30 @@ apply plugin: 'kotlin-android-extensions'
 //To publish aar
 apply plugin: 'maven-publish'
 
+ext {
+    bintrayRepo = 'hardis'
+    bintrayName = 'easylogin'
+
+    publishedGroupId = project.LIBRARY_GROUP_ID
+    libraryName = project.LIBRARY_NAME
+    artifact = project.LIBRARY_ARTIFACT_ID
+
+    libraryDescription = 'An easy way to intent activity that requires user authentication'
+
+    siteUrl = 'https://gitlab.com/antoine.petetin/easylogin'
+    gitUrl = 'https://gitlab.com/antoine.petetin/easylogin.git'
+
+    libraryVersion = project.LIBRARY_VERSION_NAME
+
+    developerId = 'apetetin'
+    developerName = 'Antoine Petetin'
+    developerEmail = 'antoine.petetin@gmail.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
+
 android {
     compileSdkVersion 28
 
@@ -67,11 +91,9 @@ dependencies {
 publishing {
     publications {
         aar(MavenPublication) {
-            groupId 'fr.hardis'
-            artifactId 'easylogin'
-            //version '0.01-alpha'
+            groupId project.LIBRARY_GROUP_ID
+            artifactId project.LIBRARY_ARTIFACT_ID
             version project.LIBRARY_VERSION_NAME
-            //artifact("$buildDir/outputs/aar/easylogin-release.aar")
 
             //Add librairies dependencies to generated pom.xml, else we will get a NoClassDefFoundError exception
             pom.withXml {
@@ -100,14 +122,9 @@ publishing {
                 password project.AZURE_TOKEN
             }
         }
-
-        maven {
-            url 'https://pkgs.dev.azure.com/antoinepetetin/_packaging/HardisRepositories/maven/v1'
-            credentials {
-                username "AZURE_ARTIFACTS"
-                //This token will expire on 19/03/2019
-                password project.AZURE_TOKEN
-            }
-        }
     }
 }
+
+// apply gradle config to upload on jcenter
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
