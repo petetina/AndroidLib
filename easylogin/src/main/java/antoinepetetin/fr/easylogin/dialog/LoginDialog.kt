@@ -10,7 +10,6 @@ import kotlinx.android.synthetic.main.easyloginactivity_layout.*
 
 class LoginDialog(var activity: EasyLoginActivity): Dialog(activity, android.R.style.Theme_Black_NoTitleBar_Fullscreen) {
     private var easyLogin: EasyLogin? = null
-    var dialog: Dialog? = null
     var loginLayout: LoginLayout? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {

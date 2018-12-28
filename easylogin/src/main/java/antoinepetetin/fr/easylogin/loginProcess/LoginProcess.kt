@@ -22,12 +22,8 @@ abstract class LoginProcess(var config: EasyLoginConfig) {
     open fun logout(context: Context):Boolean{
         try
         {
-            val preferences = context.getSharedPreferences(Constants.USER_PREFS, Context.MODE_PRIVATE)
-            val editor = preferences.edit()
+            UserSessionManager.logout(context)
             LoginManager.getInstance().logOut()
-            editor.remove(Constants.USER_TYPE)
-            editor.remove(Constants.USER_SESSION)
-            editor.apply()
             return true
         }
         catch (e:Exception) {

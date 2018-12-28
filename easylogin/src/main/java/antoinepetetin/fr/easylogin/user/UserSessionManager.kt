@@ -31,10 +31,10 @@ object UserSessionManager {
             try {
                 when (user_type) {
                     Constants.FACEBOOKFLAG -> easyUser =
-                            gson.fromJson<EasyFacebookUser>(sessionUser, EasyFacebookUser::class.java!!)
+                            gson.fromJson<EasyFacebookUser>(sessionUser, EasyFacebookUser::class.java)
                     Constants.GOOGLEFLAG -> easyUser =
-                            gson.fromJson<EasyGoogleUser>(sessionUser, EasyGoogleUser::class.java!!)
-                    else -> easyUser = gson.fromJson<EasyUser>(sessionUser, EasyUser::class.java!!)
+                            gson.fromJson<EasyGoogleUser>(sessionUser, EasyGoogleUser::class.java)
+                    else -> easyUser = gson.fromJson<EasyUser>(sessionUser, EasyUser::class.java)
                 }
             } catch (e: Exception) {
                 Log.e("GSON", e.message)
@@ -95,5 +95,13 @@ object UserSessionManager {
             Log.e("Session Error", "User is null")
             return false
         }
+    }
+
+    internal fun logout(context: Context){
+        val preferences = context.getSharedPreferences(Constants.USER_PREFS, Context.MODE_PRIVATE)
+        val editor = preferences.edit()
+        editor.remove(Constants.USER_TYPE)
+        editor.remove(Constants.USER_SESSION)
+        editor.apply()
     }
 }
