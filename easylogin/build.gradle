@@ -2,6 +2,33 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
+//To publish aar
+apply plugin: 'maven-publish'
+
+ext {
+    bintrayRepo = 'hardis'
+    bintrayName = 'easylogin'
+
+    publishedGroupId = project.LIBRARY_GROUP_ID
+    libraryName = project.LIBRARY_NAME
+    artifact = project.LIBRARY_ARTIFACT_ID
+
+    libraryDescription = 'An easy way to intent activity that requires user authentication'
+
+    siteUrl = 'https://gitlab.com/antoine.petetin/easylogin'
+    gitUrl = 'https://gitlab.com/antoine.petetin/easylogin.git'
+
+    libraryVersion = project.LIBRARY_VERSION_NAME
+
+    developerId = 'apetetin'
+    developerName = 'Antoine Petetin'
+    developerEmail = 'antoine.petetin@gmail.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
+
 android {
     compileSdkVersion 28
 
@@ -10,8 +37,8 @@ android {
     defaultConfig {
         minSdkVersion 17
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        versionCode Integer.parseInt(project.LIBRARY_VERSION_CODE)
+        versionName project.LIBRARY_VERSION_NAME
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -58,3 +85,46 @@ dependencies {
     // GSON
     implementation 'com.google.code.gson:gson:2.8.5'
 }
+
+
+//Add this for gradle publish task
+publishing {
+    publications {
+        aar(MavenPublication) {
+            groupId project.LIBRARY_GROUP_ID
+            artifactId project.LIBRARY_ARTIFACT_ID
+            version project.LIBRARY_VERSION_NAME
+
+            //Add librairies dependencies to generated pom.xml, else we will get a NoClassDefFoundError exception
+            pom.withXml {
+                //Get all dependencies from dependencies section
+                def dependenciesNode = asNode().appendNode('dependencies')
+
+                configurations.getByName("archives").allDependencies.each {
+                    if (it.group != null && (it.name != null || "unspecified".equals(it.name)) && it.version != null) {
+                        def dependencyNode = dependenciesNode.appendNode('dependency')
+                        dependencyNode.appendNode('groupId', it.group)
+                        dependencyNode.appendNode('artifactId', it.name)
+                        dependencyNode.appendNode('version', it.version)
+                    }
+                }
+            }
+
+            artifact("$buildDir/outputs/aar/${project.getName()}-release.aar")
+        }
+    }
+    repositories {
+        maven {
+            url 'https://pkgs.dev.azure.com/antoinepetetin/_packaging/HardisRepositories/maven/v1'
+            credentials {
+                username "AZURE_ARTIFACTS"
+                //This token will expire on 19/03/2019
+                password project.AZURE_TOKEN
+            }
+        }
+    }
+}
+
+// apply gradle config to upload on jcenter
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'

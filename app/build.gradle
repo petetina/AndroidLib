@@ -30,6 +30,20 @@ android {
 
 }
 
+repositories {
+    mavenCentral()
+
+
+    maven {
+        url 'https://pkgs.dev.azure.com/antoinepetetin/_packaging/HardisRepositories/maven/v1'
+        credentials {
+            username "AZURE_ARTIFACTS"
+            //This token will expire on 19/03/2019
+            password "e5rdrj3z2enkuzionrth3dqoyjax3m2xpcsoozmxdcp6scxxbw5a"
+        }
+    }
+}
+
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -45,7 +59,9 @@ dependencies {
     //Firebase
     implementation 'com.google.firebase:firebase-auth:16.0.5'
 
-    implementation project(':easylogin')
+    //Instead of importing our library project, we use azure maven repo ^^
+    //implementation project(':mylibrary')
+    implementation 'fr.hardis:easylogin:0.01-alpha'
 }
 
 apply plugin: 'com.google.gms.google-services'
